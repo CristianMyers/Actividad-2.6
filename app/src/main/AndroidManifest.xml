@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myapplication">
 
+    <!-- Permiso para usar Internet si es necesario -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <!-- Declarar permiso para usar la base de datos SQLite -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -21,10 +24,8 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
-            <!-- Declarar como actividad principal de inicio -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -32,24 +33,17 @@
         <!-- Actividad de Inicio de Sesión (LoginActivity) -->
         <activity
             android:name=".LoginActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.example.myapplication.LoginActivityAction" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
 
         <!-- Actividad de Registro (RegisterActivity) -->
         <activity
             android:name=".RegisterActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.example.myapplication.RegisterActivityAction" />
+            android:exported="true" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+        <!-- Actividad de Edición de Usuario (EditUserActivity) -->
+        <activity
+            android:name=".EditUserActivity"
+            android:exported="true" />
 
     </application>
 

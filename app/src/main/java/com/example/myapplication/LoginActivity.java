@@ -10,9 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private DatabaseHelper db;
     private EditText editUsername, editPassword;
     private Button btnLogin;
-    private DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +20,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         db = new DatabaseHelper(this);
-
         editUsername = findViewById(R.id.editUsername);
         editPassword = findViewById(R.id.editPassword);
         btnLogin = findViewById(R.id.btnLogin);
@@ -28,15 +27,18 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = editUsername.getText().toString();
-                String password = editPassword.getText().toString();
+                String username = editUsername.getText().toString().trim();
+                String password = editPassword.getText().toString().trim();
 
                 if (db.checkUser(username, password)) {
+                    // Login exitoso
                     Toast.makeText(LoginActivity.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
+                    // Aquí puedes ir a la MainActivity o a otra actividad
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();
                 } else {
-                    Toast.makeText(LoginActivity.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
+                    // Login fallido
+                    Toast.makeText(LoginActivity.this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
                 }
             }
         });

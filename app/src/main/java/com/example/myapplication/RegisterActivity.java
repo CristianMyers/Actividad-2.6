@@ -10,9 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    private DatabaseHelper db;
     private EditText editUsername, editPassword;
     private Button btnRegister;
-    private DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +20,6 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         db = new DatabaseHelper(this);
-
         editUsername = findViewById(R.id.editUsername);
         editPassword = findViewById(R.id.editPassword);
         btnRegister = findViewById(R.id.btnRegister);
@@ -31,18 +30,14 @@ public class RegisterActivity extends AppCompatActivity {
                 String username = editUsername.getText().toString();
                 String password = editPassword.getText().toString();
 
-                if (username.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(RegisterActivity.this, "Completa todos los campos", Toast.LENGTH_SHORT).show();
+                if (db.addUser(username, password)) {
+                    Toast.makeText(RegisterActivity.this, "Usuario registrado", Toast.LENGTH_SHORT).show();
+                    finish(); // Regresa a MainActivity
                 } else {
-                    if (db.registerUser(username, password)) {
-                        Toast.makeText(RegisterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                        finish();
-                    } else {
-                        Toast.makeText(RegisterActivity.this, "Error en el registro", Toast.LENGTH_SHORT).show();
-                    }
+                    Toast.makeText(RegisterActivity.this, "Error al registrar usuario", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 }
+
